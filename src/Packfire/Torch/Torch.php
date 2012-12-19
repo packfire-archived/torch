@@ -30,10 +30,25 @@ class Torch {
     
     const FILENAME = 'torch.json';
     
+    /**
+     * The option set processor
+     * @var \Packfire\Option\OptionSet
+     * @since 1.0.0
+     */
     private $options;
     
+    /**
+     * The command to execute (first argument)
+     * @var string
+     * @since 1.0.0
+     */
     private $command;
     
+    /**
+     * Create a new Torch object
+     * @param array $args The array of arguments to pass into the application
+     * @since 1.0.0
+     */
     public function __construct($args){
         array_shift($args);
         $this->options = new OptionSet();
@@ -41,6 +56,10 @@ class Torch {
         $this->options->parse($args);
     }
     
+    /**
+     * Run the application
+     * @since 1.0.0
+     */
     public function run(){
         echo "Packfire Torch\n\n";
         
@@ -62,6 +81,11 @@ class Torch {
         }
     }
     
+    /**
+     * Set the command
+     * @param string $command The command
+     * @since 1.0.0
+     */
     public function setCommand($command){
         $this->command = $command;
     }
