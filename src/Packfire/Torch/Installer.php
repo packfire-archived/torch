@@ -36,7 +36,7 @@ class Installer
      * @param \Buzz\Browser $browser Set the browser to download web assets
      * @since 1.0.0
      */
-    public function __construct(Browser $browser)
+    public function __construct(\Buzz\Browser $browser)
     {
         $this->browser = $browser;
     }
