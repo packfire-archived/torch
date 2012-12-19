@@ -12,8 +12,6 @@
 
 namespace Packfire\Torch;
 
-use Buzz\Browser;
-
 /**
  * Installer that helps to install web assets
  *
@@ -26,8 +24,18 @@ use Buzz\Browser;
  */
 class Installer
 {
+    /**
+     * The browser used to download the web assets
+     * @var \Buzz\Browser
+     * @since 1.0.0
+     */
     private $browser;
 
+    /**
+     * Create a new Installer object
+     * @param \Buzz\Browser $browser Set the browser to download web assets
+     * @since 1.0.0
+     */
     public function __construct(Browser $browser)
     {
         $this->browser = $browser;
@@ -38,7 +46,8 @@ class Installer
      * @param array $data The data from the require section
      * @since 1.0.0
      */
-    public function install($data){
+    public function install($data)
+    {
         $source = $data['source'];
         $target = $data['target'];
         $response = $this->browser->get($source);
