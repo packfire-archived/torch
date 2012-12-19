@@ -12,6 +12,7 @@
 
 namespace Packfire\Torch;
 
+use Buzz\Browser;
 use Packfire\Options\OptionSet;
 
 /**
@@ -48,7 +49,7 @@ class Torch {
                 echo "Installing... ";
                 if(is_file(self::FILENAME)){
                     $meta = json_decode(file_get_contents(self::FILENAME), true);
-                    $installer = new Installer();
+                    $installer = new Installer(new Browser());
                     foreach($meta['require'] as $entry){
                         $installer->install($entry);
                     }
