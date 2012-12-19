@@ -1,30 +1,32 @@
 {
-    "hash": "996ec2ce002104711418171cf0fa502f",
+    "hash": "a600ef182e3bb2ff623a3773c50e85b3",
     "packages": [
         {
-            "name": "nategood/httpful",
-            "version": "0.1.7",
+            "name": "kriswallsmith/buzz",
+            "version": "v0.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nategood/httpful",
-                "reference": "v0.1.7"
+                "url": "http://github.com/kriswallsmith/Buzz.git",
+                "reference": "v0.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/nategood/httpful/zipball/v0.1.7",
-                "reference": "v0.1.7",
+                "url": "https://github.com/kriswallsmith/Buzz/zipball/v0.7",
+                "reference": "v0.7",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3",
+                "php": ">=5.3.0"
+            },
+            "suggest": {
                 "ext-curl": "*"
             },
-            "time": "2012-09-15 08:46:45",
+            "time": "2012-06-25 12:01:38",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
-                    "Httpful": "src/"
+                    "Buzz": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -33,20 +35,16 @@
             ],
             "authors": [
                 {
-                    "name": "Nate Good",
-                    "email": "me@nategood.com",
-                    "homepage": "http://nategood.com"
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
                 }
             ],
-            "description": "A Readable, Chainable, REST friendly, PHP HTTP Client",
-            "homepage": "http://github.com/nategood/httpful",
+            "description": "Lightweight HTTP client",
+            "homepage": "https://github.com/kriswallsmith/Buzz",
             "keywords": [
                 "curl",
-                "http",
-                "rest",
-                "api",
-                "restful",
-                "requests"
+                "http client"
             ]
         },
         {
