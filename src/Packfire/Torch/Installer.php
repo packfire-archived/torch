@@ -12,6 +12,8 @@
 
 namespace Packfire\Torch;
 
+use Buzz\Browser;
+
 /**
  * Installer that helps to install web assets
  * 
@@ -35,9 +37,11 @@ class Installer {
      */
     public function install($data){
         $source = $data['source'];
-        $target = $data['file'];
+        $target = $data['target'];
         
-        // todo installation process
+        $buzz = new Browser();
+        $response = $buzz->get($source);
+        file_put_contents($target . DIRECTORY_SEPARATOR . basename($source), $response->getContent());
     }
     
 }
