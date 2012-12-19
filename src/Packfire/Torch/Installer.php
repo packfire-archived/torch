@@ -43,7 +43,7 @@ class Installer {
         $response = $buzz->get($source);
         
         if (!is_dir($target)) {
-            mkdir($target);
+            mkdir($target, 0777, true);
         }
         file_put_contents($target . DIRECTORY_SEPARATOR . basename($source), $response->getContent());
     }
