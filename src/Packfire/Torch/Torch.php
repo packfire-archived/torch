@@ -41,8 +41,11 @@ class Torch {
     }
     
     public function run(){
+        echo "Packfire Torch\n\n";
+        
         switch(strtolower($this->command)){
             case 'install':
+                echo "Installing...\n";
                 if(is_file(self::FILENAME)){
                     $meta = json_decode(file_get_contents(self::FILENAME), true);
                     $installer = new Installer();
@@ -50,6 +53,7 @@ class Torch {
                         $installer->install($entry);
                     }
                 }
+                echo "Complete\n";
                 break;
         }
     }
