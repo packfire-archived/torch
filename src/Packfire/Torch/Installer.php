@@ -4,7 +4,7 @@
  * This file is part of
  * Packfire Torch
  * By Sam-Mauris Yong
- * 
+ *
  * Released open source under New BSD 3-Clause License.
  * Copyright (c) 2012, Sam-Mauris Yong Shan Xian <sam@mauris.sg>
  * All rights reserved.
@@ -16,7 +16,7 @@ use Buzz\Browser;
 
 /**
  * Installer that helps to install web assets
- * 
+ *
  * @author Sam-Mauris Yong <sam@mauris.sg>
  * @copyright 2012 Sam-Mauris Yong Shan Xian <sam@mauris.sg>
  * @license http://www.opensource.org/licenses/BSD-3-Clause The BSD 3-Clause License
@@ -24,12 +24,15 @@ use Buzz\Browser;
  * @since 1.0.0
  * @link https://github.com/packfire/pdc/
  */
-class Installer {
-    
-    public function __construct(){
-        
+class Installer
+{
+    private $browser;
+
+    public function __construct(Browser $browser)
+    {
+        $this->browser = $browser;
     }
-    
+
     /**
      * Install a web asset
      * @param array $data The data from the require section
@@ -38,10 +41,7 @@ class Installer {
     public function install($data){
         $source = $data['source'];
         $target = $data['target'];
-        
-        $buzz = new Browser();
-        $response = $buzz->get($source);
+        $response = $this->browser->get($source);
         file_put_contents($target . DIRECTORY_SEPARATOR . basename($source), $response->getContent());
     }
-    
 }
