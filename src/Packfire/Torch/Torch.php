@@ -27,6 +27,8 @@ use Packfire\Options\OptionSet;
  */
 class Torch {
     
+    const FILENAME = 'torch.json';
+    
     private $options;
     
     private $command;
@@ -41,6 +43,13 @@ class Torch {
     public function run(){
         switch(strtolower($this->command)){
             case 'install':
+                if(is_file(self::FILENAME)){
+                    $meta = json_decode(file_get_contents(self::FILENAME), true);
+                    $installer = new Installer();
+                    foreach($meta['require'] as $entry){
+                        $installer->install($entry);
+                    }
+                }
                 break;
         }
     }
