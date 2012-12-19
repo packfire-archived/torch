@@ -41,6 +41,10 @@ class Installer {
         
         $buzz = new Browser();
         $response = $buzz->get($source);
+        
+        if (!is_dir($target)) {
+            mkdir($target);
+        }
         file_put_contents($target . DIRECTORY_SEPARATOR . basename($source), $response->getContent());
     }
     
