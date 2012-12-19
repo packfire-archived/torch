@@ -23,9 +23,11 @@ use Packfire\Options\OptionSet;
  * @license http://www.opensource.org/licenses/BSD-3-Clause The BSD 3-Clause License
  * @package Packfire\Torch
  * @since 1.0.0
- * @link https://github.com/packfire/pdc/
+ * @link https://github.com/packfire/torch
  */
 class Torch {
+    
+    const FILENAME = 'torch.json';
     
     private $options;
     
@@ -39,8 +41,22 @@ class Torch {
     }
     
     public function run(){
+        echo "Packfire Torch\n\n";
+        
         switch(strtolower($this->command)){
             case 'install':
+                echo "Installing... ";
+                if(is_file(self::FILENAME)){
+                    $meta = json_decode(file_get_contents(self::FILENAME), true);
+                    $installer = new Installer();
+                    foreach($meta['require'] as $entry){
+                        $installer->install($entry);
+                    }
+                }else{
+                    echo "Error\ntorch.json file not found.";
+                }
+                echo "\n";
+                echo "Complete\n";
                 break;
         }
     }

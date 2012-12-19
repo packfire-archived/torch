@@ -22,7 +22,7 @@ use Buzz\Browser;
  * @license http://www.opensource.org/licenses/BSD-3-Clause The BSD 3-Clause License
  * @package Packfire\Torch
  * @since 1.0.0
- * @link https://github.com/packfire/pdc/
+ * @link https://github.com/packfire/torch
  */
 class Installer
 {
@@ -42,6 +42,11 @@ class Installer
         $source = $data['source'];
         $target = $data['target'];
         $response = $this->browser->get($source);
+
+        if (!is_dir($target)) {
+            mkdir($target, 0777, true);
+        }
+
         file_put_contents($target . DIRECTORY_SEPARATOR . basename($source), $response->getContent());
     }
 }
