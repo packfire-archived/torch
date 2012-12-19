@@ -1,5 +1,5 @@
 {
-    "hash": "a600ef182e3bb2ff623a3773c50e85b3",
+    "hash": "16a1441d30b4c3baba0bcbdc50942cb0",
     "packages": [
         {
             "name": "kriswallsmith/buzz",
@@ -95,12 +95,44 @@
             ]
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+        {
+            "name": "mikey179/vfsStream",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikey179/vfsStream",
+                "reference": "37be730132894b97838b7b7e0d4d2a04e9f2b266"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/mikey179/vfsStream/archive/37be730132894b97838b7b7e0d4d2a04e9f2b266.zip",
+                "reference": "37be730132894b97838b7b7e0d4d2a04e9f2b266",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2012-11-06 18:52:16",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "org\\bovigo\\vfs\\": "src/main/php"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "homepage": "http://vfs.bovigo.org/"
+        }
+    ],
     "aliases": [
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "mikey179/vfsstream": 20
+    }
 }
