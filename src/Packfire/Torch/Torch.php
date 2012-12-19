@@ -39,7 +39,10 @@ class Torch {
     }
     
     public function run(){
-        
+        switch(strtolower($this->command)){
+            case 'install':
+                break;
+        }
     }
     
     public function setCommand($command){
