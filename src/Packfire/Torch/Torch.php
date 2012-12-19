@@ -29,13 +29,21 @@ class Torch {
     
     private $options;
     
+    private $command;
+    
     public function __construct($args){
+        array_shift($args);
         $this->options = new OptionSet();
+        $this->options->addIndex(0, array($this, 'setCommand'));
         $this->options->parse($args);
     }
     
     public function run(){
         
+    }
+    
+    public function setCommand($command){
+        $this->command = $command;
     }
     
 }
