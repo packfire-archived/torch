@@ -22,7 +22,7 @@ use Buzz\Browser;
  * @license http://www.opensource.org/licenses/BSD-3-Clause The BSD 3-Clause License
  * @package Packfire\Torch
  * @since 1.0.0
- * @link https://github.com/packfire/pdc/
+ * @link https://github.com/packfire/torch
  */
 class Installer {
     
