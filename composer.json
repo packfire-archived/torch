@@ -11,18 +11,24 @@
       "css",
       "files"
     ],
-    "authors":[
+    "authors": [
         {
             "name": "Sam-Mauris Yong",
             "email": "mauris@hotmail.sg",
             "homepage": "http://mauris.sg/",
             "role": "Developer"
+        },
+        {
+            "name": "Don Chan",
+            "homepage": "https://github.com/donkun",
+            "role": "Developer"
         }
     ],
     "license": "BSD-3-Clause",
-    "require":{
+    "require": {
         "php": ">=5.3.0",
-        "packfire/options": "1.1.*"
+        "packfire/options": "1.1.*",
+        "nategood/httpful": "0.1.*"
     },
     "autoload": {
         "psr-0": {"Packfire": "src/"}
