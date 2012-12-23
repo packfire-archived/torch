@@ -43,13 +43,13 @@ class Installer
 
     /**
      * Install a web asset
-     * @param array $data The data from the require section
+     * @param \Packfire\Torch\Entry $data The data from the require section
      * @since 1.0.0
      */
-    public function install($data)
+    public function install($entry)
     {
-        $source = $data['source'];
-        $target = $data['target'];
+        $source = $entry->source;
+        $target = $entry->file;
         
         $filename = basename($source);
         echo "Downloading $filename...\n";
