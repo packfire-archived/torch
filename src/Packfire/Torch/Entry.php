@@ -51,9 +51,9 @@ class Entry {
      * @since 1.0.0
      */
     public function __construct($entry){
-        $this->source = $entry['source'];
-        $this->file = $entry['file'];
-        $this->version = $entry['version'];
+        foreach($entry as $key => $value){
+            $this->$key = $value;
+        }
     }
     
 }

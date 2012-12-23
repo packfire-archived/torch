@@ -57,7 +57,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
         $installer = new Installer($this->getMockBrowser());
         $installer->install(new Entry(array(
             'source' => 'source',
-            'file' => vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source')
+            'file' => vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source'),
+            'version' => 1
         )));
         $this->assertEquals(file_get_contents(vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source')), 'content');
     }
