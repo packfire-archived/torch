@@ -55,10 +55,10 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     public function testInstall()
     {
         $installer = new Installer($this->getMockBrowser());
-        $installer->install(array(
+        $installer->install(new Entry(array(
             'source' => 'source',
-            'target' => vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target'))
-        );
+            'file' => vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source')
+        )));
         $this->assertEquals(file_get_contents(vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source')), 'content');
     }
 }
