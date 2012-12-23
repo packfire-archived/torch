@@ -65,12 +65,17 @@ class Torch {
         
         switch(strtolower($this->command)){
             case 'install':
-                echo "Installing... ";
+                echo "Installing... \n\n";
                 if(is_file(self::FILENAME)){
                     $meta = json_decode(file_get_contents(self::FILENAME), true);
-                    $installer = new Installer(new Browser());
-                    foreach($meta['require'] as $entry){
-                        $installer->install($entry);
+                    $require = $meta['require'];
+                    if($require && count($require) > 0){
+                        $installer = new Installer(new Browser());
+                        foreach($meta['require'] as $entry){
+                            $installer->install($entry);
+                        }
+                    }else{
+                        echo "Nothing to install.";
                     }
                 }else{
                     echo "Error\ntorch.json file not found.";
