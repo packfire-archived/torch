@@ -32,11 +32,11 @@ class Entry {
     public $source;
     
     /**
-     * The target entry
+     * The target file entry
      * @var string
      * @since 1.0.0
      */
-    public $target;
+    public $file;
     
     /**
      * The version number of the entry
@@ -52,7 +52,7 @@ class Entry {
      */
     public function __construct($entry){
         $this->source = $entry['source'];
-        $this->target = $entry['target'];
+        $this->file = $entry['file'];
         $this->version = $entry['version'];
     }
     
