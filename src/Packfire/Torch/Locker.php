@@ -26,18 +26,22 @@ class Locker {
     
     /**
      * Path to the lock file to generate 
-     * @var string 
+     * @var \SplFileInfo 
      * @since 1.0.0
      */
-    private $path;
+    private $file;
     
     /**
      * Create a new Locker object
-     * @param string $path Path to the lock file to generate
+     * @param string|\SplFileInfo $path Path to the lock file to generate
      * @since 1.0.0
      */
     public function __construct($path){
-        $this->path = $path;
+        if($path instanceof \SplFileInfo){
+            $this->file = $path;
+        }else{
+            $this->file = new \SplFileInfo($path);
+        }
     }
     
     /**
