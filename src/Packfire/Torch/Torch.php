@@ -71,7 +71,8 @@ class Torch {
                     $require = $meta['require'];
                     if($require && count($require) > 0){
                         $installer = new Installer(new Browser());
-                        foreach($meta['require'] as $entry){
+                        foreach($meta['require'] as $data){
+                            $entry = new Entry($data);
                             $installer->install($entry);
                         }
                     }else{
