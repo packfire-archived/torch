@@ -50,12 +50,15 @@ class Installer
     {
         $source = $data['source'];
         $target = $data['target'];
+        $filename = basename($source);
+        echo "Downloading $filename...\n";
         $response = $this->browser->get($source);
 
         if (!is_dir($target)) {
             mkdir($target, 0777, true);
         }
-
-        file_put_contents($target . DIRECTORY_SEPARATOR . basename($source), $response->getContent());
+        
+        echo "Installing $filename...\n";
+        file_put_contents($target . DIRECTORY_SEPARATOR . $filename, $response->getContent());
     }
 }
