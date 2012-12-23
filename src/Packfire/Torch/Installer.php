@@ -62,6 +62,10 @@ class Installer
         }
         
         echo "Installing as $targetName...\n";
+        if(is_file($target)){
+            unlink($target);
+        }
+        // todo check if $target is dir
         file_put_contents($target, $response->getContent());
     }
 }
