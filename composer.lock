@@ -115,7 +115,7 @@
             },
             "time": "2012-08-25 05:49:29",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "org\\bovigo\\vfs": "src/main/php"
