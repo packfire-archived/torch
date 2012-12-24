@@ -30,14 +30,22 @@ class Installer
      * @since 1.0.0
      */
     private $browser;
+    
+    /**
+     * The lock file manager
+     * @var \Packfire\Torch\Locker
+     * @since 1.0.0
+     */
+    private $locker;
 
     /**
      * Create a new Installer object
+     * @param \Packfire\Torch\Locker $locker Set the lock file manager instance
      * @param \Buzz\Browser $browser Set the browser to download web assets
      * @since 1.0.0
      */
-    public function __construct(\Buzz\Browser $browser)
-    {
+    public function __construct(\Packfire\Torch\Locker $locker, \Buzz\Browser $browser){
+        $this->locker = $locker;
         $this->browser = $browser;
     }
 
@@ -46,26 +54,26 @@ class Installer
      * @param \Packfire\Torch\Entry $data The data from the require section
      * @since 1.0.0
      */
-    public function install($entry)
-    {
-        $source = $entry->source;
+    public function install($entry){
         $target = $entry->file;
-        
-        $filename = basename($source);
-        echo "Downloading $filename...\n";
-        $response = $this->browser->get($source);
-
-        $targetDir = dirname($target);
         $targetName = basename($target);
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0777, true);
+        if($this->locker->check($entry)){
+            echo "Installing $targetName...\n";
+            $source = $entry->source;
+            echo "Downloading...\n";
+            $response = $this->browser->get($source);
+
+            $targetDir = dirname($target);
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            if(is_file($target)){
+                unlink($target);
+            }
+            // todo check if $target is dir
+            file_put_contents($target, $response->getContent());
+            $this->locker->lock($entry);
         }
-        
-        echo "Installing as $targetName...\n";
-        if(is_file($target)){
-            unlink($target);
-        }
-        // todo check if $target is dir
-        file_put_contents($target, $response->getContent());
     }
 }
