@@ -71,6 +71,7 @@ class Locker {
         if(is_file($entry->file)){
             // check for lock file
             if($this->packages){
+                $ok = false;
                 $results = ListSearch::search($this->packages, 'file', $entry->file);
                 foreach($results as $result){
                     $ok = $entry->version == $result['version'] && hash_file('sha256', $entry->file) == $result['hash'];
