@@ -65,7 +65,7 @@ class Locker {
      * @return boolean Returns true if require update, false otherwise.
      * @since 1.0.0
      */
-    public function check($entry){
+    public function check(Entry $entry){
         // check if target file exists
         // if does not exist then yes we must require update
         if(is_file($entry->file)){
@@ -94,7 +94,7 @@ class Locker {
      * @param \Packfire\Torch\Entry $entry The asset entry
      * @since 1.0.0
      */
-    public function lock($entry){
+    public function lock(Entry $entry){
         $results = ListSearch::search($this->packages, 'file', $entry->file);
         foreach($results as $result){
             if(($key = array_search($result, $this->packages)) !== false) {
