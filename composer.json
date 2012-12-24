@@ -31,9 +31,10 @@
         "kriswallsmith/buzz": "0.7.*"
     },
     "require-dev": {
-      "mikey179/vfsStream": "1.1.*"
+        "mikey179/vfsStream": "1.1.*",
+        "packfire/concrete": "1.0.*"
     },
     "autoload": {
-        "psr-0": {"Packfire": "src/"}
+        "psr-0": {"Packfire\\Torch": "src/"}
     }
 }
