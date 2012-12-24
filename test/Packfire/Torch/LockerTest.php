@@ -143,6 +143,31 @@ class LockerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($locker->check($entry));
     }
 
+    public function testCheckEntryMatchingPackageAllButDifferentFilename()
+    {
+        $target = vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'file');
+        file_put_contents($target, 'contents for hashing');
+        $entry = new Entry(array(
+            'source' => 'source',
+            'file' => $target,
+            'version' => "1.8.1",
+        ));
+
+        $lockPath = vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'torch.lock');
+        file_put_contents($lockPath, json_encode(array(
+            'packages' => array(
+                array(
+                    'file' => 'irrelevant',
+                    'version' => $entry->version ,
+                    'hash' => 'irrevelant',
+                ),
+            )
+        )));
+        $locker = new Locker($lockPath);
+
+        $this->assertTrue($locker->check($entry));
+    }
+
     public function testCheckEntryMatchingPackageAll()
     {
         $target = vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'file');
@@ -156,6 +181,36 @@ class LockerTest extends \PHPUnit_Framework_TestCase
         $lockPath = vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'torch.lock');
         file_put_contents($lockPath, json_encode(array(
             'packages' => array(
+                array(
+                    'file' => $entry->file,
+                    'version' => $entry->version ,
+                    'hash' => hash_file('sha256', $entry->file),
+                ),
+            )
+        )));
+        $locker = new Locker($lockPath);
+
+        $this->assertFalse($locker->check($entry));
+    }
+
+    public function testCheckEntryMatchingPackageAllCanHandleDuplicate()
+    {
+        $target = vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'file');
+        file_put_contents($target, 'contents for hashing');
+        $entry = new Entry(array(
+            'source' => 'source',
+            'file' => $target,
+            'version' => "1.8.1",
+        ));
+
+        $lockPath = vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'torch.lock');
+        file_put_contents($lockPath, json_encode(array(
+            'packages' => array(
+                array(
+                    'file' => $entry->file,
+                    'version' => $entry->version ,
+                    'hash' => hash_file('sha256', $entry->file),
+                ),
                 array(
                     'file' => $entry->file,
                     'version' => $entry->version ,
@@ -355,6 +410,68 @@ class LockerTest extends \PHPUnit_Framework_TestCase
                     'file' => 'irrelevant1',
                     'version' => 'irrelevant1' ,
                     'hash' => 'irrelevant1',
+                ),
+                array(
+                    'file' => $entry->file,
+                    'version' => $entry->version ,
+                    'hash' => hash_file('sha256', $entry->file),
+                ),
+                array(
+                    'file' => 'irrelevant2',
+                    'version' => 'irrelevant2' ,
+                    'hash' => 'irrelevant2',
+                ),
+            )
+        )));
+
+        $locker = new Locker($lockPath);
+        $locker->lock($entry);
+        $locker->save();
+        $this->assertEquals(file_get_contents($lockPath), json_encode(array(
+            'packages' => array(
+                array(
+                    'file' => 'irrelevant1',
+                    'version' => 'irrelevant1' ,
+                    'hash' => 'irrelevant1',
+                ),
+                array(
+                    'file' => 'irrelevant2',
+                    'version' => 'irrelevant2' ,
+                    'hash' => 'irrelevant2',
+                ),
+                array(
+                    'file' => $entry->file,
+                    'version' => $entry->version ,
+                    'hash' => hash_file('sha256', $entry->file),
+                ),
+            )
+        )));
+    }
+
+    public function testLockEntryWithEntryExistingDuplicate()
+    {
+        $target = vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'file');
+        file_put_contents($target, 'contents for hashing');
+
+        $entry = new Entry(array(
+            'source' => 'source',
+            'file' => $target,
+            'version' => "1.8.1",
+        ));
+
+        $lockPath = vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'torch.lock');
+
+        file_put_contents($lockPath, json_encode(array(
+            'packages' => array(
+                array(
+                    'file' => 'irrelevant1',
+                    'version' => 'irrelevant1' ,
+                    'hash' => 'irrelevant1',
+                ),
+                array(
+                    'file' => $entry->file,
+                    'version' => $entry->version ,
+                    'hash' => hash_file('sha256', $entry->file),
                 ),
                 array(
                     'file' => $entry->file,
