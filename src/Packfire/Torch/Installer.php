@@ -58,9 +58,10 @@ class Installer
         $target = $entry->file;
         $targetName = basename($target);
         if($this->locker->check($entry)){
-            echo "Installing $targetName...\n";
+            $version = $entry->version;
+            echo "\n  - Installing $targetName ($version)\n";
             $source = $entry->source;
-            echo "Downloading...\n";
+            echo "    Downloading...\n";
             $response = $this->browser->get($source);
 
             $targetDir = dirname($target);
