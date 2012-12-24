@@ -12,6 +12,8 @@
 
 namespace Packfire\Torch;
 
+use Packfire\Torch\Util\ListSearch;
+
 /**
  * Lock file generation
  *
@@ -32,6 +34,13 @@ class Locker {
     private $file;
     
     /**
+     * The packages locked read from the lock file
+     * @var array
+     * @since 1.0.0
+     */
+    private $packages;
+    
+    /**
      * Create a new Locker object
      * @param string|\SplFileInfo $path Path to the lock file to generate
      * @since 1.0.0
@@ -42,25 +51,67 @@ class Locker {
         }else{
             $this->file = new \SplFileInfo($path);
         }
+        if($this->file->isFile()){
+            $data = json_decode(file_get_contents($this->file->getPathname()), true);
+            $this->packages = $data['packages'];
+        }
     }
     
     /**
-     * Check whether an entry requiers update
-     * @param array $entry The asset entry
+     * Check whether an entry requires update
+     * @param \Packfire\Torch\Entry $entry The asset entry
      * @return boolean Returns true if require update, false otherwise.
      * @since 1.0.0
      */
     public function check($entry){
-        
+        // check if target file exists
+        // if does not exist then yes we must require update
+        if(is_file($entry->file)){
+            // check for lock file
+            if($this->packages){
+                $results = ListSearch::search($this->packages, 'file', $entry->file);
+                foreach($results as $result){
+                    $ok = $entry->version == $result['version'];
+                    if($ok){
+                        $ok = hash_file('sha256', $entry->file) == $result['hash'];
+                    }
+                    if(!$ok){
+                        break;
+                    }
+                }
+                if($ok){
+                    return false;
+                }
+            }
+        }
+        return true;        
     }
     
     /**
      * Perform an asset revision lock
-     * @param array $entry The asset entry
+     * @param \Packfire\Torch\Entry $entry The asset entry
      * @since 1.0.0
      */
     public function lock($entry){
-        
+        $results = ListSearch::search($this->packages, 'file', $entry->file);
+        foreach($results as $result){
+            if(($key = array_search($result, $this->packages)) !== false) {
+                unset($this->packages[$key]);
+            }
+        }
+        $this->packages[] = array(
+            'file' => $entry->file,
+            'version' => $entry->version,
+            'hash' => hash_file('sha256', $entry->file)
+        );
+    }
+    
+    /**
+     * Performs writing to the file when the class is destroyed.
+     * @since 1.0.0
+     */
+    public function __destruct(){
+        file_put_contents($this->file->getPathname(), json_encode(array('packages' => $this->packages)));
     }
     
 }
