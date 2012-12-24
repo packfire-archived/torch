@@ -28,6 +28,8 @@ use Packfire\Options\OptionSet;
  */
 class Torch {
     
+    const VERSION = '{{version}}';
+    
     const FILENAME = 'torch.json';
     
     /**
@@ -61,22 +63,33 @@ class Torch {
      * @since 1.0.0
      */
     public function run(){
-        echo "Packfire Torch\n\n";
+        echo "Packfire Torch\n";
         
         switch(strtolower($this->command)){
             case 'install':
-                echo "Installing... ";
                 if(is_file(self::FILENAME)){
+                    echo "Loading torch web assets information\n";
                     $meta = json_decode(file_get_contents(self::FILENAME), true);
-                    $installer = new Installer(new Browser());
-                    foreach($meta['require'] as $entry){
-                        $installer->install($entry);
+                    $assets = $meta['assets'];
+                    if($assets && count($assets) > 0){
+                        $locker = new Locker('torch.lock');
+                        $installer = new Installer($locker, new Browser());
+                        foreach($assets as $data){
+                            $entry = new Entry($data);
+                            $installer->install($entry);
+                        }
+                        $locker->save();
+                    }else{
+                        echo "Nothing to install.";
                     }
                 }else{
                     echo "Error\ntorch.json file not found.";
                 }
                 echo "\n";
                 echo "Complete\n";
+                break;
+            default:
+                echo "Version " . self::VERSION . "\n";
                 break;
         }
     }

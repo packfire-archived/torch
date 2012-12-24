@@ -30,32 +30,51 @@ class Installer
      * @since 1.0.0
      */
     private $browser;
+    
+    /**
+     * The lock file manager
+     * @var \Packfire\Torch\Locker
+     * @since 1.0.0
+     */
+    private $locker;
 
     /**
      * Create a new Installer object
+     * @param \Packfire\Torch\Locker $locker Set the lock file manager instance
      * @param \Buzz\Browser $browser Set the browser to download web assets
      * @since 1.0.0
      */
-    public function __construct(\Buzz\Browser $browser)
-    {
+    public function __construct(\Packfire\Torch\Locker $locker, \Buzz\Browser $browser){
+        $this->locker = $locker;
         $this->browser = $browser;
     }
 
     /**
      * Install a web asset
-     * @param array $data The data from the require section
+     * @param \Packfire\Torch\Entry $data The data from the require section
      * @since 1.0.0
      */
-    public function install($data)
-    {
-        $source = $data['source'];
-        $target = $data['target'];
-        $response = $this->browser->get($source);
+    public function install($entry){
+        $target = $entry->file;
+        $targetName = basename($target);
+        if($this->locker->check($entry)){
+            $version = $entry->version;
+            echo "\n  - Installing $targetName ($version)\n";
+            $source = $entry->source;
+            echo "    Downloading...\n";
+            $response = $this->browser->get($source);
 
-        if (!is_dir($target)) {
-            mkdir($target, 0777, true);
+            $targetDir = dirname($target);
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            if(is_file($target)){
+                unlink($target);
+            }
+            // todo check if $target is dir
+            file_put_contents($target, $response->getContent());
+            $this->locker->lock($entry);
         }
-
-        file_put_contents($target . DIRECTORY_SEPARATOR . basename($source), $response->getContent());
     }
 }
