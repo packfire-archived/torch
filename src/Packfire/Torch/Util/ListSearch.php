@@ -29,7 +29,7 @@ class ListSearch {
      * @var array
      * @since 1.0.0
      */
-    protected $results;
+    protected $results = array();
     
     /**
      * The current recursion level

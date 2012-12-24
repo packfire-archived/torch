@@ -28,6 +28,8 @@ use Packfire\Options\OptionSet;
  */
 class Torch {
     
+    const VERSION = '{{version}}';
+    
     const FILENAME = 'torch.json';
     
     /**
@@ -84,6 +86,9 @@ class Torch {
                 }
                 echo "\n";
                 echo "Complete\n";
+                break;
+            default:
+                echo "Version " . self::VERSION . "\n";
                 break;
         }
     }
