@@ -63,7 +63,7 @@ class Torch {
      * @since 1.0.0
      */
     public function run(){
-        echo "Packfire Torch\n\n";
+        echo "Packfire Torch\n";
         
         switch(strtolower($this->command)){
             case 'install':

@@ -101,6 +101,7 @@ class Locker {
                 unset($this->packages[$key]);
             }
         }
+        $this->packages = array_values($this->packages);
         $this->packages[] = array(
             'file' => $entry->file,
             'version' => $entry->version,
