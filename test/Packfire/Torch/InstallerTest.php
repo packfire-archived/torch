@@ -51,15 +51,33 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
 
         return $browser;
     }
+    
+    private function getMockLocker($entry){
+        $locker = $this->getMock('\Packfire\Torch\Locker', array('check', 'lock'), array('torch.lock'));
+        $locker->expects($this->once())
+                ->method('check')
+                ->with($entry)
+                ->will($this->returnValue(true));
+        $locker->expects($this->once())
+                ->method('lock')
+                ->with($entry);
+
+
+        return $locker;
+    }
 
     public function testInstall()
     {
-        $installer = new Installer($this->getMockBrowser());
-        $installer->install(new Entry(array(
+        $entry = new Entry(array(
             'source' => 'source',
             'file' => vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source'),
-            'version' => 1
-        )));
+            'version' => "1.8.1"
+        ));
+        $installer = new Installer($this->getMockLocker($entry), $this->getMockBrowser());
+        ob_start();
+        $installer->install($entry);
+        $output = ob_get_clean();
+        $this->assertEquals("\n  - Installing source (1.8.1)\n    Downloading...\n", $output);
         $this->assertEquals(file_get_contents(vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source')), 'content');
     }
 }
