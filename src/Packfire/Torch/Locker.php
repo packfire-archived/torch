@@ -113,7 +113,7 @@ class Locker {
      * Performs writing to the file when the class is destroyed.
      * @since 1.0.0
      */
-    public function __destruct(){
+    public function save(){
         file_put_contents($this->file->getPathname(), json_encode(array('packages' => $this->packages)));
     }
     

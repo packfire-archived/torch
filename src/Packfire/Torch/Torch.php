@@ -78,6 +78,7 @@ class Torch {
                             $entry = new Entry($data);
                             $installer->install($entry);
                         }
+                        $locker->save();
                     }else{
                         echo "Nothing to install.";
                     }
