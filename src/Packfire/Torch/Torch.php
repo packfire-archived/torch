@@ -65,13 +65,14 @@ class Torch {
         
         switch(strtolower($this->command)){
             case 'install':
-                echo "Installing... \n\n";
                 if(is_file(self::FILENAME)){
+                    echo "Loading torch web assets information\n";
                     $meta = json_decode(file_get_contents(self::FILENAME), true);
-                    $require = $meta['require'];
-                    if($require && count($require) > 0){
-                        $installer = new Installer(new Browser());
-                        foreach($meta['require'] as $data){
+                    $assets = $meta['assets'];
+                    if($assets && count($assets) > 0){
+                        $locker = new Locker('torch.lock');
+                        $installer = new Installer($locker, new Browser());
+                        foreach($assets as $data){
                             $entry = new Entry($data);
                             $installer->install($entry);
                         }
