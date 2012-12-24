@@ -95,7 +95,7 @@ class ListSearch {
      * @since 1.0.0
      */
     protected function find($array){
-        if ($array[$this->key] == $this->value){
+        if (isset($array[$this->key]) && $array[$this->key] === $this->value){
             $this->results[] = $array;
         }
         
