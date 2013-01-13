@@ -26,6 +26,7 @@ namespace Packfire\Torch;
 class Compiler extends \Packfire\Concrete\Compiler {
     
     protected function compile(){
+        $this->processor = new \Packfire\Concrete\Processor\StripWhiteSpace();
         $this->addFile(new \SplFileInfo(__DIR__ . '/../../../license'));
         $this->addFolder(__DIR__ . '/../../../bin/');
         $this->addFolder(__DIR__ . '/../../');
