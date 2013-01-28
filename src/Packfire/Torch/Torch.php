@@ -14,6 +14,7 @@ namespace Packfire\Torch;
 
 use Buzz\Browser;
 use Packfire\Options\OptionSet;
+use Buzz\Client\Curl;
 
 /**
  * Packfire Torch application core.
@@ -73,7 +74,9 @@ class Torch {
                     $assets = $meta['assets'];
                     if($assets && count($assets) > 0){
                         $locker = new Locker('torch.lock');
-                        $installer = new Installer($locker, new Browser());
+                        $driver = new Curl();
+                        $driver->setOption(CURLOPT_SSL_VERIFYPEER, false);
+                        $installer = new Installer($locker, new Browser($driver));
                         foreach($assets as $data){
                             $entry = new Entry($data);
                             $installer->install($entry);
