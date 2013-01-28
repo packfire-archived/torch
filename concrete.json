@@ -1,0 +1,23 @@
+{
+	"output": "torch.phar",
+	"stub": "res/stub.php",
+	"build":[
+		{
+			"processor": "\\Packfire\\Concrete\\Processor\\License",
+			"build":[
+				"license"
+			]
+		},
+		{
+			"processor": [
+				"\\Packfire\\Concrete\\Processor\\StripWhiteSpace",
+				"\\Packfire\\Concrete\\Processor\\GitTagVersion"
+			],
+			"build":[
+				"bin",
+				"src",
+				"vendor"
+			]
+		}
+	]
+}
