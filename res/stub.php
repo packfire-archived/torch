@@ -11,6 +11,6 @@
  */
 
 Phar::mapPhar('torch.phar');
-require 'bin/torch';
+require 'phar://torch.phar/bin/torch';
 
 __HALT_COMPILER();
