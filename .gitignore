@@ -5,3 +5,4 @@ desktop.ini
 vendor
 composer.phar
 phpunit.xml
+bin/torch.phar
