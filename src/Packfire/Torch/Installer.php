@@ -62,7 +62,7 @@ class Installer
             echo "\n  - Installing $targetName ($version)\n";
             $source = $entry->source;
             echo "    Downloading...\n";
-            $response = $this->browser->get($source, array('User-Agent' => 'Packfire Torch/' . Torch::VERSION));
+            $response = $this->browser->get($source);
 
             $targetDir = dirname($target);
             if (!is_dir($targetDir)) {
