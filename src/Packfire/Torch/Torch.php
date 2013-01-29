@@ -5,8 +5,8 @@
  * Packfire Torch
  * By Sam-Mauris Yong
  * 
- * Released open source under New BSD 3-Clause License.
- * Copyright (c) 2012, Sam-Mauris Yong Shan Xian <sam@mauris.sg>
+ * Released open source under BSD 3-Clause License.
+ * Copyright (c) Sam-Mauris Yong Shan Xian <sam@mauris.sg>
  * All rights reserved.
  */
 
@@ -14,21 +14,20 @@ namespace Packfire\Torch;
 
 use Buzz\Browser;
 use Packfire\Options\OptionSet;
+use Buzz\Client\Curl;
 
 /**
  * Packfire Torch application core.
  * All magic starts here.
  * 
  * @author Sam-Mauris Yong <sam@mauris.sg>
- * @copyright 2012 Sam-Mauris Yong Shan Xian <sam@mauris.sg>
- * @license http://www.opensource.org/licenses/BSD-3-Clause The BSD 3-Clause License
+ * @copyright Sam-Mauris Yong Shan Xian <sam@mauris.sg>
+ * @license http://www.opensource.org/licenses/BSD-3-Clause BSD 3-Clause License
  * @package Packfire\Torch
  * @since 1.0.0
  * @link https://github.com/packfire/torch
  */
 class Torch {
-    
-    const VERSION = '{{version}}';
     
     const FILENAME = 'torch.json';
     
@@ -73,7 +72,9 @@ class Torch {
                     $assets = $meta['assets'];
                     if($assets && count($assets) > 0){
                         $locker = new Locker('torch.lock');
-                        $installer = new Installer($locker, new Browser());
+                        $driver = new Curl();
+                        $driver->setOption(CURLOPT_SSL_VERIFYPEER, false);
+                        $installer = new Installer($locker, new Browser($driver));
                         foreach($assets as $data){
                             $entry = new Entry($data);
                             $installer->install($entry);
@@ -89,7 +90,7 @@ class Torch {
                 echo "Complete\n";
                 break;
             default:
-                echo "Version " . self::VERSION . "\n";
+                echo "Version {{version}}\n";
                 break;
         }
     }
