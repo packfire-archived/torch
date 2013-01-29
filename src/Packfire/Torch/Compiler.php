@@ -53,18 +53,11 @@ class Compiler extends \Packfire\Concrete\Compiler {
 
 Phar::mapPhar('torch.phar');
 
-EOF;
-
-        // add warning once the phar is older than 30 days
-        if (preg_match('{^[a-f0-9]+$}', $this->version)) {
-            $stub .= "echo \"Warning: this is not a stable build\\n\";\n";
-        }
-
-        return $stub . <<<'EOF'
 require 'phar://torch.phar/bin/torch';
 
 __HALT_COMPILER();
 EOF;
+        return $stub;
     }
     
 }

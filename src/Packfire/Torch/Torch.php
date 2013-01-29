@@ -29,8 +29,6 @@ use Buzz\Client\Curl;
  */
 class Torch {
     
-    const VERSION = '{{version}}';
-    
     const FILENAME = 'torch.json';
     
     /**
@@ -92,7 +90,7 @@ class Torch {
                 echo "Complete\n";
                 break;
             default:
-                echo "Version " . self::VERSION . "\n";
+                echo "Version {{version}}\n";
                 break;
         }
     }
