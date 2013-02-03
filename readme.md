@@ -2,6 +2,8 @@
 
 >web assets made easy
 
+![Packfire Torch](http://i.imgur.com/e7SnsvB.png)
+
 Packfire Torch is a tiny CLI tool to help web developers manage web assets and resources. You no longer have to include those JavaScript libraries, CSS files, webfont files and images into your project version control anymore.
 
 Project resources such as web assets may take up a lot of space in your repository. To work around this, include a `torch.json` file that contains the metadata of your resources for Packfire Torch to install.
@@ -44,7 +46,7 @@ A sample `torch.json` file looks like this:
 
 ##Compiling
 
-To compile Packfire Torch into a PHAR binary, you will need to install the dependencies through Composer after `git clone`-ing. After which, you can run the `bin/concrete` script against PHP in the repository folder.
+To compile Packfire Torch into a PHAR binary, you will need to install the dependencies through [Composer](http://getcomposer.org/) after `git clone`-ing. After which, you can run the `bin/concrete` script against PHP in the repository folder.
 
     $ git clone https://github.com/packfire/torch.git torch
     $ cd torch
