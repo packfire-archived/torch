@@ -106,7 +106,7 @@ class ListSearch {
                     $this->find($subarray);
                 }
             }
-            --$this->currentLevel;
+            --$this->current;
         }
     }
 
