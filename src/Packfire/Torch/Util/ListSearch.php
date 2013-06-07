@@ -22,7 +22,8 @@ namespace Packfire\Torch\Util;
  * @since 1.0.0
  * @link https://github.com/packfire/torch
  */
-class ListSearch {
+class ListSearch
+{
     
     /**
      * The results of the search
@@ -66,7 +67,8 @@ class ListSearch {
      * @param integer $level The maximum recursion level
      * @since 1.0.0
      */
-    protected function __construct($key, $value, $level){
+    protected function __construct($key, $value, $level)
+    {
         $this->key = $key;
         $this->value = $value;
         $this->maxLevel = $level;
@@ -81,8 +83,9 @@ class ListSearch {
      * @return array Returns an array of the search result.
      * @since 1.0.0
      */
-    public static function search($array, $key, $value, $level = 1){
-        if(is_array($array)){
+    public static function search($array, $key, $value, $level = 1)
+    {
+        if (is_array($array)) {
             $search = new self($key, $value, $level);
             $search->find($array);
             return $search->results;
@@ -94,20 +97,20 @@ class ListSearch {
      * @param array $array The array to search in
      * @since 1.0.0
      */
-    protected function find($array){
-        if (isset($array[$this->key]) && $array[$this->key] === $this->value){
+    protected function find($array)
+    {
+        if (isset($array[$this->key]) && $array[$this->key] === $this->value) {
             $this->results[] = $array;
         }
         
-        if($this->current < $this->maxLevel){
+        if ($this->current < $this->maxLevel) {
             ++$this->current;
-            foreach ($array as $subarray){
-                if(is_array($subarray)){
+            foreach ($array as $subarray) {
+                if (is_array($subarray)) {
                     $this->find($subarray);
                 }
             }
             --$this->current;
         }
     }
-
 }

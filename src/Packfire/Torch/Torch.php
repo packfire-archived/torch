@@ -83,10 +83,10 @@ class Torch
                             $installer->install($entry);
                         }
                         $locker->save();
-                    }else{
+                    } else {
                         echo "Nothing to install.";
                     }
-                }else{
+                } else {
                     echo "Error\ntorch.json file not found.";
                 }
                 echo "\n";

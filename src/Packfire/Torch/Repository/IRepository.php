@@ -22,8 +22,7 @@ namespace Packfire\Torch\Repository;
  * @since 1.1.0
  * @link https://github.com/packfire/torch
  */
-interface IRepository {
-    
+interface IRepository
+{
     public function find($name, $version = null);
-    
 }
