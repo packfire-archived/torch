@@ -27,7 +27,8 @@ use Buzz\Client\Curl;
  * @since 1.0.0
  * @link https://github.com/packfire/torch
  */
-class Torch {
+class Torch
+{
     
     const FILENAME = 'torch.json';
     
@@ -50,7 +51,8 @@ class Torch {
      * @param array $args The array of arguments to pass into the application
      * @since 1.0.0
      */
-    public function __construct($args){
+    public function __construct($args)
+    {
         array_shift($args);
         $this->options = new OptionSet();
         $this->options->addIndex(0, array($this, 'setCommand'));
@@ -61,21 +63,22 @@ class Torch {
      * Run the application
      * @since 1.0.0
      */
-    public function run(){
+    public function run()
+    {
         echo "Packfire Torch\n";
         
-        switch(strtolower($this->command)){
+        switch (strtolower($this->command)) {
             case 'install':
-                if(is_file(self::FILENAME)){
+                if (is_file(self::FILENAME)) {
                     echo "Loading torch web assets information\n";
                     $meta = json_decode(file_get_contents(self::FILENAME), true);
                     $assets = $meta['assets'];
-                    if($assets && count($assets) > 0){
+                    if ($assets && count($assets) > 0) {
                         $locker = new Locker('torch.lock');
                         $driver = new Curl();
                         $driver->setOption(CURLOPT_SSL_VERIFYPEER, false);
                         $installer = new Installer($locker, new Browser($driver));
-                        foreach($assets as $data){
+                        foreach ($assets as $data) {
                             $entry = new Entry($data);
                             $installer->install($entry);
                         }
@@ -100,8 +103,8 @@ class Torch {
      * @param string $command The command
      * @since 1.0.0
      */
-    public function setCommand($command){
+    public function setCommand($command)
+    {
         $this->command = $command;
     }
-    
 }

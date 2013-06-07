@@ -22,7 +22,8 @@ namespace Packfire\Torch;
  * @since 1.0.0
  * @link https://github.com/packfire/torch
  */
-class Entry {
+class Entry
+{
     
     /**
      * The source entry
@@ -50,10 +51,10 @@ class Entry {
      * @param array $entry The entry array
      * @since 1.0.0
      */
-    public function __construct($entry){
-        foreach($entry as $key => $value){
+    public function __construct($entry)
+    {
+        foreach ($entry as $key => $value) {
             $this->$key = $value;
         }
     }
-    
 }

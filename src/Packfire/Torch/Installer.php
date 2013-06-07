@@ -44,7 +44,8 @@ class Installer
      * @param \Buzz\Browser $browser Set the browser to download web assets
      * @since 1.0.0
      */
-    public function __construct(\Packfire\Torch\Locker $locker, \Buzz\Browser $browser){
+    public function __construct(\Packfire\Torch\Locker $locker, \Buzz\Browser $browser)
+    {
         $this->locker = $locker;
         $this->browser = $browser;
     }
@@ -54,10 +55,11 @@ class Installer
      * @param \Packfire\Torch\Entry $data The data from the require section
      * @since 1.0.0
      */
-    public function install($entry){
+    public function install($entry)
+    {
         $target = $entry->file;
         $targetName = basename($target);
-        if($this->locker->check($entry)){
+        if ($this->locker->check($entry)) {
             $version = $entry->version;
             echo "\n  - Installing $targetName ($version)\n";
             $source = $entry->source;
@@ -69,7 +71,7 @@ class Installer
                 mkdir($targetDir, 0777, true);
             }
 
-            if(is_file($target)){
+            if (is_file($target)) {
                 unlink($target);
             }
             // todo check if $target is dir

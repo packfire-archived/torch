@@ -24,7 +24,8 @@ use Packfire\Torch\Util\ListSearch;
  * @since 1.0.0
  * @link https://github.com/packfire/torch
  */
-class Locker {
+class Locker
+{
 
     /**
      * Path to the lock file to generate
@@ -45,16 +46,17 @@ class Locker {
      * @param string|\SplFileInfo $path Path to the lock file to generate
      * @since 1.0.0
      */
-    public function __construct($path){
-        if($path instanceof \SplFileInfo){
+    public function __construct($path)
+    {
+        if ($path instanceof \SplFileInfo) {
             $this->file = $path;
-        }else{
+        } else {
             $this->file = new \SplFileInfo($path);
         }
-        if($this->file->isFile()){
+        if ($this->file->isFile()) {
             $data = json_decode(file_get_contents($this->file->getPathname()), true);
             $this->packages = $data['packages'];
-        }else{
+        } else {
             $this->packages = array();
         }
     }
@@ -65,22 +67,22 @@ class Locker {
      * @return boolean Returns true if require update, false otherwise.
      * @since 1.0.0
      */
-    public function check(Entry $entry){
+    public function check(Entry $entry)
+    {
         // check if target file exists
         // if does not exist then yes we must require update
-        if(is_file($entry->file)){
+        if (is_file($entry->file)) {
             // check for lock file
-            if($this->packages){
+            if ($this->packages) {
                 $ok = false;
                 $results = ListSearch::search($this->packages, 'file', $entry->file);
-                foreach($results as $result){
+                foreach ($results as $result) {
                     $ok = $entry->version == $result['version'] && hash_file('sha256', $entry->file) == $result['hash'];
-
-                    if(!$ok){
+                    if (!$ok) {
                         break;
                     }
                 }
-                if($ok){
+                if ($ok) {
                     return false;
                 }
             }
@@ -92,10 +94,11 @@ class Locker {
      * @param \Packfire\Torch\Entry $entry The asset entry
      * @since 1.0.0
      */
-    public function lock(Entry $entry){
+    public function lock(Entry $entry)
+    {
         $results = ListSearch::search($this->packages, 'file', $entry->file);
-        foreach($results as $result){
-            if(($key = array_search($result, $this->packages)) !== false) {
+        foreach ($results as $result) {
+            if (($key = array_search($result, $this->packages)) !== false) {
                 unset($this->packages[$key]);
             }
         }
@@ -111,8 +114,8 @@ class Locker {
      * Performs writing to the file when the class is destroyed.
      * @since 1.0.0
      */
-    public function save(){
+    public function save()
+    {
         file_put_contents($this->file->getPathname(), json_encode(array('packages' => $this->packages)));
     }
-
 }
