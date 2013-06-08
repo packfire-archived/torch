@@ -85,5 +85,4 @@ class ListSearchTest extends \PHPUnit_Framework_TestCase
         $results = ListSearch::search($haystack, 'bravo', '4');
         $this->assertCount(0, $results);
     }
-    
 }

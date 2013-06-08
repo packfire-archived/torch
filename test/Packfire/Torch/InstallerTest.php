@@ -52,7 +52,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
         return $browser;
     }
     
-    private function getMockLocker($entry){
+    private function getMockLocker($entry)
+    {
         $locker = $this->getMock('\Packfire\Torch\Locker', array('check', 'lock'), array('torch.lock'));
         $locker->expects($this->once())
                 ->method('check')
@@ -68,11 +69,13 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
 
     public function testInstall()
     {
-        $entry = new Entry(array(
-            'source' => 'source',
-            'file' => vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source'),
-            'version' => "1.8.1"
-        ));
+        $entry = new Entry(
+            array(
+                'source' => 'source',
+                'file' => vfsStream::url('tmp' . DIRECTORY_SEPARATOR . 'target' . DIRECTORY_SEPARATOR . 'source'),
+                'version' => "1.8.1"
+            )
+        );
         $installer = new Installer($this->getMockLocker($entry), $this->getMockBrowser());
         ob_start();
         $installer->install($entry);
